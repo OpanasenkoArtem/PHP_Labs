@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Helpdesk — тікети</title>
+    <style>
+        body { font-family: sans-serif; margin: 20px; }
+        table { border-collapse: collapse; margin-top: 10px; }
+        th, td { border: 1px solid #999; padding: 4px 8px; }
+        .error { color: red; }
+    </style>
+</head>
+<body>
+    <h1>Система тікетів</h1>
+
+    <h2>Новий тікет</h2>
+    <form id="add-form">
+        <input name="subject" placeholder="Тема" required>
+        <select name="priority">
+            <option value="low">low</option>
+            <option value="medium" selected>medium</option>
+            <option value="high">high</option>
+        </select>
+        <select name="status">
+            <option value="open" selected>open</option>
+            <option value="in_progress">in_progress</option>
+            <option value="closed">closed</option>
+        </select>
+        <button type="submit">Додати</button>
+    </form>
+    <p id="message"></p>
+
+    <h2>Список</h2>
+    <input id="search" placeholder="Пошук за статусом (open, closed...)">
+
+    <table>
+        <thead>
+            <tr><th>ID</th><th>Тема</th><th>Пріоритет</th><th>Статус</th></tr>
+        </thead>
+        <tbody id="results"></tbody>
+    </table>
+
+    <script src="script.js"></script>
+</body>
+</html>
