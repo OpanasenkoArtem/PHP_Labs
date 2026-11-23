@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<title>Helpdesk API — тест</title>
+<style>body{font-family:sans-serif;max-width:640px;margin:1em auto}</style>
+</head>
+<body>
+<h1>Helpdesk API</h1>
+
+<p><button id="list">GET список</button></p>
+
+<p>
+  <input id="gid" type="number" placeholder="id">
+  <button id="get">GET один</button>
+  <button id="close">POST close</button>
+</p>
+
+<p>
+  <input id="subject" placeholder="subject">
+  <select id="priority">
+    <option value="low">low</option>
+    <option value="medium">medium</option>
+    <option value="high">high</option>
+  </select>
+  <button id="create">POST створити</button>
+</p>
+
+<pre id="out"></pre>
+
+<script>
+const out = document.getElementById('out');
+const $ = id => document.getElementById(id);
+
+async function call(url, options) {
+  const res = await fetch(url, options);
+  const body = await res.json();
+  out.textContent = res.status + ' ' + res.statusText + '\n' + JSON.stringify(body, null, 2);
+}
+
+$('list').onclick = () => call('api.php?resource=tickets');
+$('get').onclick = () => call('api.php?resource=tickets&id=' + encodeURIComponent($('gid').value));
+$('close').onclick = () => call('api.php?resource=tickets&action=close&id=' + encodeURIComponent($('gid').value), {method: 'POST'});
+$('create').onclick = () => call('api.php?resource=tickets', {
+  method: 'POST',
+  headers: {'Content-Type': 'application/json'},
+  body: JSON.stringify({subject: $('subject').value, priority: $('priority').value})
+});
+</script>
+</body>
+</html>
